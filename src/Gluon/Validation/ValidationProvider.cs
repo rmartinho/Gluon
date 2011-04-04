@@ -1,16 +1,29 @@
-﻿using System.Collections.Generic;
+﻿#region Copyright and license information
+// Copyright 2011 Martinho Fernandes
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//  
+// http://www.apache.org/licenses/LICENSE-2.0
+//  
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+#endregion
+
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
+
+using Gluon.Utils;
 
 namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
-    [ToolboxBitmap(typeof(ErrorProvider))]
     [ProvideProperty("Validator", typeof(Control))]
-    //[ProvideProperty("Error", typeof(Control))]
-    //[ProvideProperty("IconAlignment", typeof(Control))]
-    //[ProvideProperty("IconPadding", typeof(Control))]
     public class ValidationProvider : Component, IExtenderProvider
     {
         bool IExtenderProvider.CanExtend(object extendee)
@@ -23,72 +36,85 @@ namespace Gluon.Validation
         [Description("When to do validation: either automatically or only when manually invoked.")]
         public ValidationMode ValidationMode
         {
-            get { return validationMode; }
+            get { return this.validationMode; }
             set
             {
+                Ensure.EnumArgument(value, "value");
+                if (value == this.validationMode)
+                {
+                    return;
+                }
                 if (value == ValidationMode.Automatic)
                 {
-                    foreach (var control in validators.Keys)
+                    foreach (var control in this.validators.Keys)
                     {
                         AttachValidation(control);
                     }
                 }
-                else if (value == ValidationMode.Manual)
+                if (value == ValidationMode.Manual)
                 {
-                    foreach (var control in validators.Keys)
+                    foreach (var control in this.validators.Keys)
                     {
                         DetachValidation(control);
                     }
                 }
-                else
-                {
-                    throw new InvalidEnumArgumentException("value", (int)value, typeof(ValidationMode));
-                }
-                validationMode = value;
+                this.validationMode = value;
             }
         }
+
         private ValidationMode validationMode;
 
         [Category("Behavior")]
         [Description("The validator for this control.")]
         public IControlValidator GetValidator(Control control)
         {
+            Ensure.ArgumentNotNull(control, "control");
             IControlValidator validator;
-            if (!validators.TryGetValue(control, out validator))
+            if (!this.validators.TryGetValue(control, out validator))
             {
                 return AlwaysTrueValidator.Instance;
             }
             return validator;
         }
+
         public void SetValidator(Control control, IControlValidator validator)
         {
+            Ensure.ArgumentNotNull(control, "control");
             if (validator == null)
             {
-                if (validators.Remove(control))
+                if (this.validators.Remove(control))
                 {
                     DetachValidation(control);
                 }
             }
             else
             {
-                validators[control] = validator;
+                this.validators[control] = validator;
                 AttachValidation(control);
             }
         }
-        private readonly IDictionary<Control, IControlValidator> validators = new Dictionary<Control, IControlValidator>();
+
+        private readonly IDictionary<Control, IControlValidator> validators =
+            new Dictionary<Control, IControlValidator>();
 
         private void AttachValidation(Control control)
         {
             control.Validating += Validate;
         }
+
         private void DetachValidation(Control control)
         {
             control.Validating -= Validate;
         }
+
         private void Validate(object sender, CancelEventArgs e)
         {
+            if (sender == null)
+            {
+                return;
+            }
             var control = (Control)sender;
-            var result = validators[control].Validate(control);
+            var result = this.validators[control].Validate(control);
             if (!result.IsValid)
             {
                 MessageBox.Show(result.ErrorMessage);
@@ -98,7 +124,7 @@ namespace Gluon.Validation
 
         public void ValidateAll()
         {
-            foreach (var item in validators)
+            foreach (var item in this.validators)
             {
                 var control = item.Key;
                 var validator = item.Value;
@@ -106,6 +132,10 @@ namespace Gluon.Validation
             }
         }
     }
-    
-    public enum ValidationMode { Automatic, Manual }
+
+    public enum ValidationMode
+    {
+        Automatic,
+        Manual
+    }
 }

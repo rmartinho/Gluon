@@ -14,7 +14,17 @@
 // limitations under the License.
 #endregion
 
-using System.Reflection;
+using System;
 
-[assembly: AssemblyTitle("Gluon.Example")]
-[assembly: AssemblyDescription("Gluon.Example")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   Indicates that the value of marked type (or its derivatives) cannot be compared using '==' or '!=' operators.
+    ///   There is only exception to compare with <c>null</c>, it is permitted
+    /// </summary>
+    [AttributeUsage(
+        AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct,
+        AllowMultiple = false,
+        Inherited = true)]
+    internal sealed class CannotApplyEqualityOperatorAttribute : Attribute {}
+}

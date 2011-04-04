@@ -14,7 +14,28 @@
 // limitations under the License.
 #endregion
 
-using System.Reflection;
+using System;
 
-[assembly: AssemblyTitle("Gluon.Example")]
-[assembly: AssemblyDescription("Gluon.Example")]
+namespace Gluon.Annotations
+{
+    [Flags]
+    internal enum ImplicitUseKindFlags
+    {
+        Default = Access | Assign | Instantiated,
+
+        /// <summary>
+        ///   Only entity marked with attribute considered used
+        /// </summary>
+        Access = 1,
+
+        /// <summary>
+        ///   Indicates implicit assignment to a member
+        /// </summary>
+        Assign = 2,
+
+        /// <summary>
+        ///   Indicates implicit instantiation of a type
+        /// </summary>
+        Instantiated = 4,
+    }
+}

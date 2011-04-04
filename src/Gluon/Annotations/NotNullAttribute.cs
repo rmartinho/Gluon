@@ -14,7 +14,16 @@
 // limitations under the License.
 #endregion
 
-using System.Reflection;
+using System;
 
-[assembly: AssemblyTitle("Gluon.Example")]
-[assembly: AssemblyDescription("Gluon.Example")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   Indicates that the value of marked element could never be <c>null</c>
+    /// </summary>
+    [AttributeUsage(
+        AttributeTargets.Method | AttributeTargets.Parameter | AttributeTargets.Property
+        | AttributeTargets.Delegate | AttributeTargets.Field, AllowMultiple = false,
+        Inherited = true)]
+    internal sealed class NotNullAttribute : Attribute {}
+}

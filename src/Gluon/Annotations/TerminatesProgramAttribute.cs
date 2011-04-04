@@ -14,7 +14,14 @@
 // limitations under the License.
 #endregion
 
-using System.Reflection;
+using System;
 
-[assembly: AssemblyTitle("Gluon.Example")]
-[assembly: AssemblyDescription("Gluon.Example")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   Indicates that the marked method unconditionally terminates control flow execution.
+    ///   For example, it could unconditionally throw exception
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    internal sealed class TerminatesProgramAttribute : Attribute {}
+}

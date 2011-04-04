@@ -1,0 +1,7 @@
+<Configuration>
+  <CodeAnnotations>
+    <Namespace>Gluon.Annotations</Namespace>
+    <Namespace>JetBrains.Annotations</Namespace>
+    <DefaultNamespace>Gluon.Annotations</DefaultNamespace>
+  </CodeAnnotations>
+</Configuration>

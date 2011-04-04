@@ -52,6 +52,26 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Annotations\AssertionConditionAttribute.cs" />
+    <Compile Include="Annotations\AssertionConditionType.cs" />
+    <Compile Include="Annotations\AssertionMethodAttribute.cs" />
+    <Compile Include="Annotations\CanBeNullAttribute.cs" />
+    <Compile Include="Annotations\CannotApplyEqualityOperatorAttribute.cs" />
+    <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
+    <Compile Include="Annotations\ImplicitUseKindFlags.cs" />
+    <Compile Include="Annotations\ImplicitUseTargetFlags.cs" />
+    <Compile Include="Annotations\InvokerParameterNameAttribute.cs" />
+    <Compile Include="Annotations\MeansImplicitUseAttribute.cs" />
+    <Compile Include="Annotations\NotNullAttribute.cs" />
+    <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
+    <Compile Include="Annotations\TerminatesProgramAttribute.cs" />
+    <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Ensure.cs" />
     <Compile Include="Validation\AlwaysTrueValidator.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
     <Compile Include="Validation\RequiredTextValidator.cs">
@@ -71,6 +91,12 @@
     <None Include="..\Bevonn.snk">
       <Link>Properties\Bevonn.snk</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

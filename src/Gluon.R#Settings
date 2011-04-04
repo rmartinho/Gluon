@@ -1,0 +1,8 @@
+<Configuration>
+  <SharingSettings Version="1.0" AutoUpdateCommonSettings="True" ExternalSettingsFilePath="Gluon\Gluon.R#Settings">
+    <ExcludedSettingsGroups>
+      <ExcludedSettingsGroup Name="AgentJohnson.IntroduceStringConstant" />
+      <ExcludedSettingsGroup Name="AgentJohnson" />
+    </ExcludedSettingsGroups>
+  </SharingSettings>
+</Configuration>

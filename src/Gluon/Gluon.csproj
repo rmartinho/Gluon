@@ -73,6 +73,12 @@
     </Compile>
     <Compile Include="Utils\Ensure.cs" />
     <Compile Include="Validation\AlwaysTrueValidator.cs" />
+    <Compile Include="Validation\NumberRangeValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Validation\ValidationButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Validation\ValidationResult.cs" />
     <Compile Include="Validation\RequiredTextValidator.cs">
       <SubType>Component</SubType>

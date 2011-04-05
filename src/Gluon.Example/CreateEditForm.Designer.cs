@@ -29,53 +29,98 @@ namespace Gluon.Example
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            Gluon.Validation.RegexValidator EmailValidator;
+            this.CloseButton = new System.Windows.Forms.Button();
+            this.EmailBox = new System.Windows.Forms.TextBox();
+            this.NumberBox = new System.Windows.Forms.TextBox();
             this.ValidationProvider = new Gluon.Validation.ValidationProvider();
-            this.NumberValidator = new Gluon.Validation.RegexValidator();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.EmailValidator = new Gluon.Validation.RegexValidator();
+            this.ValidationButton = new Gluon.Validation.ValidationButton();
+            this.OpenDialogButton = new System.Windows.Forms.Button();
+            this.NumberValidator = new Gluon.Validation.NumberRangeValidator();
+            EmailValidator = new Gluon.Validation.RegexValidator();
+            ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).BeginInit();
             this.SuspendLayout();
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(68, 86);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(159, 20);
-            this.textBox1.TabIndex = 0;
-            this.ValidationProvider.SetValidator(this.textBox1, this.NumberValidator);
-            // 
-            // ValidationProvider
-            // 
-            this.ValidationProvider.ValidationMode = Gluon.Validation.ValidationMode.Manual;
-            // 
-            // NumberValidator
-            // 
-            this.NumberValidator.ErrorMessage = "This is a numeric value.";
-            this.NumberValidator.Expression = "^\\d+$";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(68, 112);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(159, 20);
-            this.textBox2.TabIndex = 1;
-            this.ValidationProvider.SetValidator(this.textBox2, this.EmailValidator);
             // 
             // EmailValidator
             // 
-            this.EmailValidator.ErrorMessage = "This is an e-mail value.";
-            this.EmailValidator.Expression = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$";
-            this.EmailValidator.IgnoreCase = true;
+            EmailValidator.ErrorMessage = "This field needs a valid e-mail address.";
+            EmailValidator.Expression = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$";
+            EmailValidator.IgnoreCase = true;
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.CloseButton.Location = new System.Drawing.Point(87, 213);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(75, 23);
+            this.CloseButton.TabIndex = 3;
+            this.CloseButton.Text = "Cancel";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            // 
+            // EmailBox
+            // 
+            this.EmailBox.CausesValidation = false;
+            this.EmailBox.Location = new System.Drawing.Point(68, 112);
+            this.EmailBox.Name = "EmailBox";
+            this.EmailBox.Size = new System.Drawing.Size(159, 20);
+            this.EmailBox.TabIndex = 1;
+            this.ValidationProvider.SetValidator(this.EmailBox, EmailValidator);
+            // 
+            // NumberBox
+            // 
+            this.NumberBox.CausesValidation = false;
+            this.NumberBox.Location = new System.Drawing.Point(68, 86);
+            this.NumberBox.Name = "NumberBox";
+            this.NumberBox.Size = new System.Drawing.Size(159, 20);
+            this.NumberBox.TabIndex = 0;
+            this.ValidationProvider.SetValidator(this.NumberBox, this.NumberValidator);
+            // 
+            // ValidationProvider
+            // 
+            this.ValidationProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
+            this.ValidationProvider.ContainerControl = this;
+            // 
+            // ValidationButton
+            // 
+            this.ValidationButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.ValidationButton.Location = new System.Drawing.Point(197, 213);
+            this.ValidationButton.Name = "ValidationButton";
+            this.ValidationButton.Size = new System.Drawing.Size(75, 23);
+            this.ValidationButton.TabIndex = 4;
+            this.ValidationButton.Text = "OK";
+            this.ValidationButton.UseVisualStyleBackColor = true;
+            this.ValidationButton.ValidationProvider = this.ValidationProvider;
+            // 
+            // OpenDialogButton
+            // 
+            this.OpenDialogButton.Location = new System.Drawing.Point(104, 12);
+            this.OpenDialogButton.Name = "OpenDialogButton";
+            this.OpenDialogButton.Size = new System.Drawing.Size(75, 23);
+            this.OpenDialogButton.TabIndex = 5;
+            this.OpenDialogButton.Text = "Open Dialog";
+            this.OpenDialogButton.UseVisualStyleBackColor = true;
+            this.OpenDialogButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // NumberValidator
+            // 
+            this.NumberValidator.Maximum = 100;
+            this.NumberValidator.Minimum = 0;
             // 
             // CreateEditForm
             // 
+            this.AcceptButton = this.ValidationButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.CloseButton;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.OpenDialogButton);
+            this.Controls.Add(this.ValidationButton);
+            this.Controls.Add(this.CloseButton);
+            this.Controls.Add(this.EmailBox);
+            this.Controls.Add(this.NumberBox);
             this.Name = "CreateEditForm";
             this.Text = "CreateEditForm";
+            ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,11 +128,13 @@ namespace Gluon.Example
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox NumberBox;
         private ValidationProvider ValidationProvider;
-        private System.Windows.Forms.TextBox textBox2;
-        private RegexValidator NumberValidator;
-        private RegexValidator EmailValidator;
+        private System.Windows.Forms.TextBox EmailBox;
+        private System.Windows.Forms.Button CloseButton;
+        private ValidationButton ValidationButton;
+        private System.Windows.Forms.Button OpenDialogButton;
+        private NumberRangeValidator NumberValidator;
 
     }
 }

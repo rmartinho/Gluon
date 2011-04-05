@@ -15,6 +15,7 @@
 #endregion
 
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -26,7 +27,6 @@ namespace Gluon.Validation
     public class RegexValidator : Component, IControlValidator
     {
         private const string DefaultErrorMessage = "This value is not in the correct format.";
-
         private string errorMessage = DefaultErrorMessage;
 
         [DefaultValue(DefaultErrorMessage)]
@@ -77,6 +77,7 @@ namespace Gluon.Validation
         {
             Ensure.ArgumentNotNull(control, "control");
 
+            Debug.Assert(control.Text != null);
             if (!Regex.IsMatch(control.Text, Expression, RegexOptions))
             {
                 return ValidationResult.Invalid(ErrorMessage);

@@ -16,6 +16,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using Gluon.Utils;
@@ -24,45 +25,21 @@ namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
     [ProvideProperty("Validator", typeof(Control))]
-    public class ValidationProvider : Component, IExtenderProvider
+    public class ValidationProvider : ErrorProvider, IExtenderProvider
     {
-        bool IExtenderProvider.CanExtend(object extendee)
-        {
-            return extendee is Control;
-        }
+        private bool allowChangingFocus = true;
 
-        [DefaultValue(ValidationMode.Automatic)]
+        [DefaultValue(true)]
         [Category("Behavior")]
-        [Description("When to do validation: either automatically or only when manually invoked.")]
-        public ValidationMode ValidationMode
+        [Description("Whether invalid controls can change focus.")]
+        public bool AllowChangingFocus
         {
-            get { return this.validationMode; }
-            set
-            {
-                Ensure.EnumArgument(value, "value");
-                if (value == this.validationMode)
-                {
-                    return;
-                }
-                if (value == ValidationMode.Automatic)
-                {
-                    foreach (var control in this.validators.Keys)
-                    {
-                        AttachValidation(control);
-                    }
-                }
-                if (value == ValidationMode.Manual)
-                {
-                    foreach (var control in this.validators.Keys)
-                    {
-                        DetachValidation(control);
-                    }
-                }
-                this.validationMode = value;
-            }
+            get { return this.allowChangingFocus; }
+            set { this.allowChangingFocus = value; }
         }
 
-        private ValidationMode validationMode;
+        private readonly IDictionary<Control, IControlValidator> validators =
+            new Dictionary<Control, IControlValidator>();
 
         [Category("Behavior")]
         [Description("The validator for this control.")]
@@ -84,58 +61,56 @@ namespace Gluon.Validation
             {
                 if (this.validators.Remove(control))
                 {
-                    DetachValidation(control);
+                    control.Validating -= Validate;
                 }
             }
             else
             {
                 this.validators[control] = validator;
-                AttachValidation(control);
+                control.Validating += Validate;
             }
-        }
-
-        private readonly IDictionary<Control, IControlValidator> validators =
-            new Dictionary<Control, IControlValidator>();
-
-        private void AttachValidation(Control control)
-        {
-            control.Validating += Validate;
-        }
-
-        private void DetachValidation(Control control)
-        {
-            control.Validating -= Validate;
         }
 
         private void Validate(object sender, CancelEventArgs e)
         {
+            Ensure.ArgumentNotNull(e, "e");
             if (sender == null)
             {
                 return;
             }
+
             var control = (Control)sender;
             var result = this.validators[control].Validate(control);
             if (!result.IsValid)
             {
-                MessageBox.Show(result.ErrorMessage);
-                //e.Cancel = true;
+                SetError(control, result.ErrorMessage);
+                if (!AllowChangingFocus)
+                {
+                    e.Cancel = true;
+                }
             }
-        }
-
-        public void ValidateAll()
-        {
-            foreach (var item in this.validators)
+            else
             {
-                var control = item.Key;
-                var validator = item.Value;
-                validator.Validate(control);
+                SetError(control, null);
             }
         }
-    }
 
-    public enum ValidationMode
-    {
-        Automatic,
-        Manual
+        public bool ValidateAll()
+        {
+            var valid = true;
+            var e = new CancelEventArgs();
+            foreach (var control in this.validators.Keys)
+            {
+                Debug.Assert(control != null);
+                Validate(control, e);
+                valid = valid && string.IsNullOrEmpty(GetError(control));
+            }
+            return valid;
+        }
+
+        bool IExtenderProvider.CanExtend(object extendee)
+        {
+            return extendee is Control;
+        }
     }
 }

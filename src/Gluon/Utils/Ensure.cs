@@ -163,8 +163,8 @@ namespace Gluon.Utils
             [InvokerParameterName] string paramName)
         {
             ArgumentNotNull(value, paramName);
-            Argument(
-                !string.IsNullOrEmpty(value), paramName, Resources.Exception_StringArgumentIsEmpty);
+            Debug.Assert(Resources.Exception_StringArgumentIsEmpty != null);
+            Argument(!string.IsNullOrEmpty(value), paramName, Resources.Exception_StringArgumentIsEmpty);
         }
 
         /// <summary>
@@ -203,6 +203,7 @@ namespace Gluon.Utils
             [InvokerParameterName] string paramName)
         {
             ArgumentNotNull(collection, paramName);
+            Debug.Assert(Resources.Exception_CollectionArgumentIsEmpty != null);
             Argument(collection.Count > 0, paramName, Resources.Exception_CollectionArgumentIsEmpty);
         }
 

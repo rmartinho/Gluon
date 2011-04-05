@@ -24,5 +24,10 @@ namespace Gluon.Example
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            new CreateEditForm().ShowDialog();
+        }
     }
 }

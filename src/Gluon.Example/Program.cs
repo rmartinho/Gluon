@@ -29,7 +29,8 @@ namespace Gluon.Example
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CreateEditForm());
+            new ValidationForm().ShowDialog();
+            //Application.Run(new CreateEditForm());
         }
     }
 }

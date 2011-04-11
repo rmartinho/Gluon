@@ -26,19 +26,19 @@ namespace Gluon.Validation
 {
     public class RegexValidator : Component, IControlValidator
     {
-        private const string DefaultErrorMessage = "This value is not in the correct format.";
-        private string errorMessage = DefaultErrorMessage;
+        private const string DefaultMessage = "This value is not in the correct format.";
+        private string message = DefaultMessage;
 
-        [DefaultValue(DefaultErrorMessage)]
+        [DefaultValue(DefaultMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control fails to validate.")]
-        public string ErrorMessage
+        public string Message
         {
-            get { return this.errorMessage; }
+            get { return this.message; }
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                this.errorMessage = value;
+                this.message = value;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Gluon.Validation
             Debug.Assert(control.Text != null);
             if (!Regex.IsMatch(control.Text, Expression, RegexOptions))
             {
-                return ValidationResult.Invalid(ErrorMessage);
+                return ValidationResult.Invalid(Message);
             }
             return ValidationResult.Valid;
         }

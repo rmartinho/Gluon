@@ -53,35 +53,35 @@ namespace Gluon.Validation
             }
         }
 
-        private const string DefaultOutOfRangeErrorMessage = "This number is out of range.";
-        private string outOfRangeErrorMessage = DefaultOutOfRangeErrorMessage;
+        private const string DefaultOutOfRangeMessage = "This number is out of range.";
+        private string outOfRangeMessage = DefaultOutOfRangeMessage;
 
-        [DefaultValue(DefaultOutOfRangeErrorMessage)]
+        [DefaultValue(DefaultOutOfRangeMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control has a value out of range.")]
-        public string OutOfRangeErrorMessage
+        public string OutOfRangeMessage
         {
-            get { return this.outOfRangeErrorMessage; }
+            get { return this.outOfRangeMessage; }
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                this.outOfRangeErrorMessage = value;
+                this.outOfRangeMessage = value;
             }
         }
 
-        private const string DefaultInvalidFormatErrorMessage = "This value is not a number.";
-        private string invalidFormatErrorMessage = DefaultInvalidFormatErrorMessage;
+        private const string DefaultInvalidFormatMessage = "This value is not a number.";
+        private string invalidFormatMessage = DefaultInvalidFormatMessage;
 
-        [DefaultValue(DefaultInvalidFormatErrorMessage)]
+        [DefaultValue(DefaultInvalidFormatMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control does not have a numeric value.")]
-        public string InvalidFormatErrorMessage
+        public string InvalidFormatMessage
         {
-            get { return this.invalidFormatErrorMessage; }
+            get { return this.invalidFormatMessage; }
             set
             {
                 Ensure.ArgumentNotNull(value, "value");
-                this.invalidFormatErrorMessage = value;
+                this.invalidFormatMessage = value;
             }
         }
 
@@ -91,11 +91,11 @@ namespace Gluon.Validation
             int value;
             if (!int.TryParse(control.Text, out value))
             {
-                return ValidationResult.Invalid(InvalidFormatErrorMessage);
+                return ValidationResult.Invalid(InvalidFormatMessage);
             }
             if (value < Minimum || value > Maximum)
             {
-                return ValidationResult.Invalid(OutOfRangeErrorMessage);
+                return ValidationResult.Invalid(OutOfRangeMessage);
             }
             return ValidationResult.Valid;
         }

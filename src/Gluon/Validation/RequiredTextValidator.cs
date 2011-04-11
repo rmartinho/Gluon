@@ -25,22 +25,22 @@ namespace Gluon.Validation
     {
         public RequiredTextValidator()
         {
-            ErrorMessage = DefaultErrorMessage;
+            Message = DefaultMessage;
         }
 
-        [DefaultValue(DefaultErrorMessage)]
+        [DefaultValue(DefaultMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control fails to validate.")]
-        public string ErrorMessage { get; set; }
+        public string Message { get; set; }
 
-        private const string DefaultErrorMessage = "This value is required.";
+        private const string DefaultMessage = "This value is required.";
 
         public ValidationResult Validate(Control control)
         {
             Ensure.ArgumentNotNull(control, "control");
             if (string.IsNullOrEmpty(control.Text.Trim()))
             {
-                return ValidationResult.Invalid(ErrorMessage);
+                return ValidationResult.Invalid(Message);
             }
             return ValidationResult.Valid;
         }

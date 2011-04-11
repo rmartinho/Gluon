@@ -121,12 +121,12 @@
     <value>False</value>
   </metadata>
   <metadata name="EmailValidator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>190, 25</value>
+    <value>162, 23</value>
   </metadata>
   <metadata name="ValidationProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>16, 25</value>
+    <value>12, 18</value>
   </metadata>
   <metadata name="NumberValidator.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>320, 25</value>
+    <value>283, 24</value>
   </metadata>
 </root>

@@ -96,7 +96,7 @@ namespace Gluon.Example
             this.ValidationButton.UseVisualStyleBackColor = true;
             this.ValidationButton.ValidationProvider = this.ValidationProvider;
             // 
-            // CreateEditForm
+            // ValidationForm
             // 
             this.AcceptButton = this.ValidationButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -107,7 +107,7 @@ namespace Gluon.Example
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.EmailBox);
             this.Controls.Add(this.NumberBox);
-            this.Name = "CreateEditForm";
+            this.Name = "ValidationForm";
             this.Text = "CreateEditForm";
             ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).EndInit();
             this.ResumeLayout(false);

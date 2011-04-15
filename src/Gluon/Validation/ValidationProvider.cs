@@ -1,17 +1,19 @@
 ﻿#region Copyright and license information
+
 // Copyright 2011 Martinho Fernandes
-//  
+// 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//  
+// 
 // http://www.apache.org/licenses/LICENSE-2.0
-//  
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #endregion
 
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ using Gluon.Utils;
 namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
-    [ProvideProperty("Validator", typeof(Control))]
+    [ProvideProperty("Validator", typeof (Control))]
     public class ValidationProvider : ErrorProvider, IExtenderProvider
     {
         private bool allowChangingFocus = true;
@@ -61,13 +63,13 @@ namespace Gluon.Validation
             {
                 if (this.validators.Remove(control))
                 {
-                    control.Validating -= Validate;
+                    control.Validating -= this.Validate;
                 }
             }
             else
             {
                 this.validators[control] = validator;
-                control.Validating += Validate;
+                control.Validating += this.Validate;
             }
         }
 
@@ -79,19 +81,19 @@ namespace Gluon.Validation
                 return;
             }
 
-            var control = (Control)sender;
+            var control = (Control) sender;
             var result = this.validators[control].Validate(control);
             if (!result.IsValid)
             {
-                SetError(control, result.ErrorMessage);
-                if (!AllowChangingFocus)
+                this.SetError(control, result.ErrorMessage);
+                if (!this.AllowChangingFocus)
                 {
                     e.Cancel = true;
                 }
             }
             else
             {
-                SetError(control, null);
+                this.SetError(control, null);
             }
         }
 
@@ -102,8 +104,8 @@ namespace Gluon.Validation
             foreach (var control in this.validators.Keys)
             {
                 Debug.Assert(control != null);
-                Validate(control, e);
-                valid = valid && string.IsNullOrEmpty(GetError(control));
+                this.Validate(control, e);
+                valid = valid && string.IsNullOrEmpty(this.GetError(control));
             }
             return valid;
         }

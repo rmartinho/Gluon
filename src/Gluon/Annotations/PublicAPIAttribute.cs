@@ -1,4 +1,4 @@
-#region Copyright and license information
+ï»¿#region Copyright and license information
 
 // Copyright 2011 Martinho Fernandes
 // 
@@ -17,18 +17,20 @@
 #endregion
 
 using System;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyProduct("Gluon")]
-[assembly: AssemblyCopyright("Copyright © Martinho Fernandes 2011")]
-[assembly: AssemblyCompany("Big Empty Void of Nothingness")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   This attribute is intended to mark publicly available API which should not be removed and so is treated as used.
+    /// </summary>
+    [MeansImplicitUse]
+    internal sealed class PublicAPIAttribute : Attribute
+    {
+        public PublicAPIAttribute() {}
+
+        // ReSharper disable UnusedParameter.Local
+        public PublicAPIAttribute(string comment)
+            // ReSharper restore UnusedParameter.Local
+        {}
+    }
+}

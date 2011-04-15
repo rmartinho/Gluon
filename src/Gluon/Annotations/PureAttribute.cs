@@ -17,18 +17,13 @@
 #endregion
 
 using System;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyProduct("Gluon")]
-[assembly: AssemblyCopyright("Copyright © Martinho Fernandes 2011")]
-[assembly: AssemblyCompany("Big Empty Void of Nothingness")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   Indicates that method doesn't contain observable side effects.
+    ///   The same as System.Diagnostics.Contracts.PureAttribute/>
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method, Inherited = true)]
+    internal sealed class PureAttribute : Attribute {}
+}

@@ -17,18 +17,14 @@
 #endregion
 
 using System;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyProduct("Gluon")]
-[assembly: AssemblyCopyright("Copyright © Martinho Fernandes 2011")]
-[assembly: AssemblyCompany("Big Empty Void of Nothingness")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: NeutralResourcesLanguage("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+namespace Gluon.Annotations
+{
+    /// <summary>
+    ///   Tells code analysis engine if the parameter is completely handled when the invoked method is on stack. 
+    ///   If the parameter is delegate, indicates that delegate is executed while the method is executed.
+    ///   If the parameter is enumerable, indicates that it is enumerated while the method is executed.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Parameter, Inherited = true)]
+    internal sealed class InstantHandleAttribute : Attribute {}
+}

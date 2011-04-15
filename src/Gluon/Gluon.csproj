@@ -57,12 +57,15 @@
     <Compile Include="Annotations\AssertionMethodAttribute.cs" />
     <Compile Include="Annotations\CanBeNullAttribute.cs" />
     <Compile Include="Annotations\CannotApplyEqualityOperatorAttribute.cs" />
+    <Compile Include="Annotations\InstantHandleAttribute.cs" />
     <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
     <Compile Include="Annotations\ImplicitUseKindFlags.cs" />
     <Compile Include="Annotations\ImplicitUseTargetFlags.cs" />
     <Compile Include="Annotations\InvokerParameterNameAttribute.cs" />
     <Compile Include="Annotations\MeansImplicitUseAttribute.cs" />
+    <Compile Include="Annotations\PublicAPIAttribute.cs" />
     <Compile Include="Annotations\NotNullAttribute.cs" />
+    <Compile Include="Annotations\PureAttribute.cs" />
     <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
     <Compile Include="Annotations\TerminatesProgramAttribute.cs" />
     <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />

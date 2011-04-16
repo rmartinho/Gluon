@@ -74,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\DictionaryExtensions.cs" />
     <Compile Include="Utils\Ensure.cs" />
     <Compile Include="Validation\AlwaysTrueValidator.cs" />
     <Compile Include="Validation\CompositeValidator.cs">

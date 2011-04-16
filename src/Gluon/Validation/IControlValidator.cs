@@ -18,10 +18,13 @@
 
 using System.Windows.Forms;
 
+using Gluon.Annotations;
+
 namespace Gluon.Validation
 {
     public interface IControlValidator
     {
-        ValidationResult Validate(Control control);
+        [NotNull]
+        ValidationResult Validate([NotNull] Control control);
     }
 }

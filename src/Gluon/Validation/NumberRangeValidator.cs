@@ -19,6 +19,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using Gluon.Annotations;
 using Gluon.Utils;
 
 namespace Gluon.Validation
@@ -56,8 +57,9 @@ namespace Gluon.Validation
         }
 
         private const string DefaultOutOfRangeMessage = "This number is out of range.";
-        private string outOfRangeMessage = DefaultOutOfRangeMessage;
+        [NotNull] private string outOfRangeMessage = DefaultOutOfRangeMessage;
 
+        [NotNull]
         [DefaultValue(DefaultOutOfRangeMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control has a value out of range.")]
@@ -72,8 +74,9 @@ namespace Gluon.Validation
         }
 
         private const string DefaultInvalidFormatMessage = "This value is not a number.";
-        private string invalidFormatMessage = DefaultInvalidFormatMessage;
+        [NotNull] private string invalidFormatMessage = DefaultInvalidFormatMessage;
 
+        [NotNull]
         [DefaultValue(DefaultInvalidFormatMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control does not have a numeric value.")]
@@ -95,7 +98,8 @@ namespace Gluon.Validation
             {
                 return ValidationResult.Invalid(this.InvalidFormatMessage);
             }
-            if (value < this.Minimum || value > this.Maximum)
+            if (value < this.Minimum
+                || value > this.Maximum)
             {
                 return ValidationResult.Invalid(this.OutOfRangeMessage);
             }

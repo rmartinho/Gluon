@@ -21,21 +21,27 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
+using Gluon.Annotations;
+using Gluon.Utils;
+
 namespace Gluon.Validation
 {
     [ToolboxBitmap(typeof (Button))]
     public class ValidationButton : Button
     {
+        [CanBeNull]
         [Category("Behavior")]
         [Description("The component that provides validation functionality.")]
         public ValidationProvider ValidationProvider { get; set; }
 
-        protected override void OnClick(EventArgs e)
+        protected override void OnClick([NotNull] EventArgs e)
         {
+            Ensure.ArgumentNotNull(e, "e");
             var oldDialogResult = this.DialogResult;
             try
             {
-                if (this.ValidationProvider != null && !this.ValidationProvider.ValidateAll())
+                if (this.ValidationProvider != null
+                    && !this.ValidationProvider.ValidateAll())
                 {
                     this.DialogResult = DialogResult.None;
                 }

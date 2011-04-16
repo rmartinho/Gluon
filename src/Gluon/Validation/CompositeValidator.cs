@@ -22,14 +22,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Gluon.Annotations;
 using Gluon.Utils;
 
 namespace Gluon.Validation
 {
     public sealed class CompositeValidator : Component, IControlValidator
     {
-        private readonly List<IControlValidator> validators;
+        [NotNull] private readonly List<IControlValidator> validators;
 
+        [NotNull]
         public IList<IControlValidator> Validators
         {
             get { return this.validators; }
@@ -37,7 +39,7 @@ namespace Gluon.Validation
 
         public CompositeValidator() : this(Enumerable.Empty<IControlValidator>()) {}
 
-        public CompositeValidator(IEnumerable<IControlValidator> validators)
+        public CompositeValidator([NotNull] IEnumerable<IControlValidator> validators)
         {
             Ensure.ArgumentNotNull(validators, "validators");
             this.validators = new List<IControlValidator>(validators);

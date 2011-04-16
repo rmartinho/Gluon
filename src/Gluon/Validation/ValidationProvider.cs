@@ -21,13 +21,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
+using Gluon.Annotations;
 using Gluon.Utils;
 
 namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
     [ProvideProperty("Validator", typeof (Control))]
-    public class ValidationProvider : ErrorProvider, IExtenderProvider
+    public class ValidationProvider : Component, IExtenderProvider
     {
         private bool allowChangingFocus = true;
 
@@ -40,37 +41,46 @@ namespace Gluon.Validation
             set { this.allowChangingFocus = value; }
         }
 
-        private readonly IDictionary<Control, IControlValidator> validators =
+        [NotNull] private readonly IDictionary<Control, IControlValidator> validators =
             new Dictionary<Control, IControlValidator>();
 
+        [NotNull]
         [Category("Behavior")]
         [Description("The validator for this control.")]
-        public IControlValidator GetValidator(Control control)
+        public IControlValidator GetValidator([NotNull] Control control)
         {
             Ensure.ArgumentNotNull(control, "control");
-            IControlValidator validator;
-            if (!this.validators.TryGetValue(control, out validator))
-            {
-                return AlwaysTrueValidator.Instance;
-            }
-            return validator;
+            return this.validators.GetValueOrDefault(control, AlwaysTrueValidator.Instance);
         }
 
-        public void SetValidator(Control control, IControlValidator validator)
+        public void SetValidator([NotNull] Control control, [CanBeNull] IControlValidator validator)
         {
             Ensure.ArgumentNotNull(control, "control");
-            if (validator == null)
+            var changeKind = this.validators.Change(control, validator);
+            if (changeKind == ChangeKind.Added)
             {
-                if (this.validators.Remove(control))
-                {
-                    control.Validating -= this.Validate;
-                }
-            }
-            else
-            {
-                this.validators[control] = validator;
                 control.Validating += this.Validate;
             }
+            else if (changeKind == ChangeKind.Removed)
+            {
+                control.Validating -= this.Validate;
+            }
+        }
+
+        [NotNull] private readonly IDictionary<Control, string> errors =
+            new Dictionary<Control, string>();
+
+        [NotNull]
+        public string GetError([NotNull] Control control)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            return this.errors.GetValueOrDefault(control, string.Empty);
+        }
+
+        public void SetError([NotNull] Control control, [CanBeNull] string error)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            this.errors.Change(control, error);
         }
 
         private void Validate(object sender, CancelEventArgs e)

@@ -76,8 +76,6 @@ namespace Gluon.Example
             // 
             // ValidationProvider
             // 
-            this.ValidationProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
-            this.ValidationProvider.ContainerControl = this;
             // 
             // NumberValidator
             // 

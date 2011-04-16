@@ -16,57 +16,61 @@
 
 #endregion
 
-using System;
-
+using Gluon.Annotations;
 using Gluon.Utils;
 
 namespace Gluon.Validation
 {
     public sealed class ValidationResult
     {
-        private ValidationResult(string errorMessage)
+        private ValidationResult([CanBeNull] string errorMessage)
         {
+            Ensure.ArgumentNotNullOrEmpty(errorMessage, "errorMessage");
             this.errorMessage = errorMessage;
         }
 
         private static class Singleton
         {
-            public static readonly ValidationResult Value = new ValidationResult(null);
+            [NotNull] public static readonly ValidationResult Value = new ValidationResult(null);
         }
 
+        [NotNull]
         public static ValidationResult Valid
         {
             get { return Singleton.Value; }
         }
 
-        public static ValidationResult Invalid(string errorMessage)
+        [NotNull]
+        public static ValidationResult Invalid([NotNull] string errorMessage)
         {
-            if (errorMessage == null)
-            {
-                throw new ArgumentNullException("errorMessage");
-            }
+            Ensure.ArgumentNotNull(errorMessage, "errorMessage");
             return new ValidationResult(errorMessage);
         }
 
-        private readonly string errorMessage;
+        [CanBeNull] private readonly string errorMessage;
 
         public bool IsValid
         {
             get { return this.errorMessage == null; }
         }
 
+        [NotNull]
         public string ErrorMessage
         {
-            get { return this.errorMessage; }
+            get
+            {
+                Ensure.State(this.errorMessage != null, "Cannot retrieve error message from valid result.");
+                return this.errorMessage;
+            }
         }
 
-        public static bool operator true(ValidationResult result)
+        public static bool operator true([NotNull] ValidationResult result)
         {
             Ensure.ArgumentNotNull(result, "result");
             return result.IsValid;
         }
 
-        public static bool operator false(ValidationResult result)
+        public static bool operator false([NotNull] ValidationResult result)
         {
             Ensure.ArgumentNotNull(result, "result");
             return !result.IsValid;

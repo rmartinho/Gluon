@@ -18,6 +18,9 @@
 
 using System.Windows.Forms;
 
+using Gluon.Annotations;
+using Gluon.Utils;
+
 namespace Gluon.Validation
 {
     internal sealed class AlwaysTrueValidator : IControlValidator
@@ -26,9 +29,10 @@ namespace Gluon.Validation
 
         private static class Singleton
         {
-            public static readonly IControlValidator Value = new AlwaysTrueValidator();
+            [NotNull] public static readonly IControlValidator Value = new AlwaysTrueValidator();
         }
 
+        [NotNull]
         public static IControlValidator Instance
         {
             get { return Singleton.Value; }
@@ -36,6 +40,7 @@ namespace Gluon.Validation
 
         public ValidationResult Validate(Control control)
         {
+            Ensure.ArgumentNotNull(control, "control");
             return ValidationResult.Valid;
         }
     }

@@ -29,8 +29,9 @@ namespace Gluon.Validation
     public class RegexValidator : Component, IControlValidator
     {
         private const string DefaultMessage = "This value is not in the correct format.";
-        private string message = DefaultMessage;
+        [NotNull] private string message = DefaultMessage;
 
+        [NotNull]
         [DefaultValue(DefaultMessage)]
         [Category("Appearance")]
         [Description("The error message shown when a control fails to validate.")]
@@ -47,7 +48,8 @@ namespace Gluon.Validation
         private const string DefaultExpression = ".*";
         [NotNull] private string expression = DefaultExpression;
 
-        [NotNull, DefaultValue(DefaultExpression)]
+        [NotNull]
+        [DefaultValue(DefaultExpression)]
         [Category("Behavior")]
         [Description("The regular expression used for validation.")]
         public string Expression

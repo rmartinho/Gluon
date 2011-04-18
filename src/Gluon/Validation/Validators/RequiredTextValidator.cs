@@ -16,31 +16,46 @@
 
 #endregion
 
+using System.ComponentModel;
 using System.Windows.Forms;
 
 using Gluon.Annotations;
 using Gluon.Utils;
 
-namespace Gluon.Validation
+namespace Gluon.Validation.Validators
 {
-    internal sealed class AlwaysTrueValidator : IControlValidator
+    public class RequiredTextValidator : Component, IControlValidator
     {
-        private AlwaysTrueValidator() {}
-
-        private static class Singleton
+        public RequiredTextValidator()
         {
-            [NotNull] public static readonly IControlValidator Value = new AlwaysTrueValidator();
+            this.Message = DefaultMessage;
         }
+
+        [NotNull] private string message;
 
         [NotNull]
-        public static IControlValidator Instance
+        [DefaultValue(DefaultMessage)]
+        [Category("Appearance")]
+        [Description("The error message shown when a control fails to validate.")]
+        public string Message
         {
-            get { return Singleton.Value; }
+            get { return this.message; }
+            set
+            {
+                Ensure.ArgumentNotNull(value, "value");
+                this.message = value;
+            }
         }
+
+        private const string DefaultMessage = "This value is required.";
 
         public ValidationResult Validate(Control control)
         {
             Ensure.ArgumentNotNull(control, "control");
+            if (string.IsNullOrEmpty(control.Text.Trim()))
+            {
+                return ValidationResult.Invalid(this.Message);
+            }
             return ValidationResult.Valid;
         }
     }

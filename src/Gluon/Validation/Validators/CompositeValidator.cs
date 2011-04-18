@@ -25,7 +25,7 @@ using System.Windows.Forms;
 using Gluon.Annotations;
 using Gluon.Utils;
 
-namespace Gluon.Validation
+namespace Gluon.Validation.Validators
 {
     public sealed class CompositeValidator : Component, IControlValidator
     {

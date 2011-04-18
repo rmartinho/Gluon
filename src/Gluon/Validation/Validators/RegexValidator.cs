@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using Gluon.Annotations;
 using Gluon.Utils;
 
-namespace Gluon.Validation
+namespace Gluon.Validation.Validators
 {
     public class RegexValidator : Component, IControlValidator
     {

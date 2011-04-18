@@ -5,32 +5,30 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4C6CCCE9-56EB-4B79-9AA9-ACF25F10AB0F}</ProjectGuid>
+    <ProjectGuid>{45954FC8-1B39-4531-9DFD-39814CED8B0D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gluon</RootNamespace>
     <AssemblyName>Gluon</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\build\</OutputPath>
+    <OutputPath>..\build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\build\</OutputPath>
+    <OutputPath>..\build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -41,12 +39,18 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bevonn.snk">
+      <Link>Properties\Bevonn.snk</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
@@ -57,59 +61,46 @@
     <Compile Include="Annotations\AssertionMethodAttribute.cs" />
     <Compile Include="Annotations\CanBeNullAttribute.cs" />
     <Compile Include="Annotations\CannotApplyEqualityOperatorAttribute.cs" />
-    <Compile Include="Annotations\InstantHandleAttribute.cs" />
-    <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
     <Compile Include="Annotations\ImplicitUseKindFlags.cs" />
     <Compile Include="Annotations\ImplicitUseTargetFlags.cs" />
+    <Compile Include="Annotations\InstantHandleAttribute.cs" />
     <Compile Include="Annotations\InvokerParameterNameAttribute.cs" />
+    <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
     <Compile Include="Annotations\MeansImplicitUseAttribute.cs" />
-    <Compile Include="Annotations\PublicAPIAttribute.cs" />
     <Compile Include="Annotations\NotNullAttribute.cs" />
+    <Compile Include="Annotations\PublicAPIAttribute.cs" />
     <Compile Include="Annotations\PureAttribute.cs" />
     <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
     <Compile Include="Annotations\TerminatesProgramAttribute.cs" />
     <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Utils\DictionaryExtensions.cs" />
     <Compile Include="Utils\Ensure.cs" />
-    <Compile Include="Validation\AlwaysTrueValidator.cs" />
-    <Compile Include="Validation\CompositeValidator.cs">
+    <Compile Include="Validation\Validators\AlwaysTrueValidator.cs" />
+    <Compile Include="Validation\Validators\CompositeValidator.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Validation\NumberRangeValidator.cs">
+    <Compile Include="Validation\IControlValidator.cs" />
+    <Compile Include="Validation\Validators\NumberRangeValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Validation\Validators\RegexValidator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Validation\Validators\RequiredTextValidator.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Validation\ValidationButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Validation\ValidationResult.cs" />
-    <Compile Include="Validation\RequiredTextValidator.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Validation\RegexValidator.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Validation\IControlValidator.cs" />
     <Compile Include="Validation\ValidationProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+    <Compile Include="Validation\ValidationResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Bevonn.snk">
-      <Link>Properties\Bevonn.snk</Link>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

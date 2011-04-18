@@ -1,4 +1,6 @@
 ﻿using Gluon.Validation;
+using Gluon.Validation.Validators;
+
 namespace Gluon.Example
 {
     partial class ValidationForm
@@ -29,14 +31,14 @@ namespace Gluon.Example
         /// </summary>
         private void InitializeComponent()
         {
-            Gluon.Validation.RegexValidator EmailValidator;
+            RegexValidator EmailValidator;
             this.CloseButton = new System.Windows.Forms.Button();
             this.EmailBox = new System.Windows.Forms.TextBox();
             this.NumberBox = new System.Windows.Forms.TextBox();
             this.ValidationProvider = new Gluon.Validation.ValidationProvider();
-            this.NumberValidator = new Gluon.Validation.NumberRangeValidator();
+            this.NumberValidator = new NumberRangeValidator();
             this.ValidationButton = new Gluon.Validation.ValidationButton();
-            EmailValidator = new Gluon.Validation.RegexValidator();
+            EmailValidator = new RegexValidator();
             ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).BeginInit();
             this.SuspendLayout();
             // 

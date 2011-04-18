@@ -1,19 +1,17 @@
 ﻿#region Copyright and license information
-
 // Copyright 2011 Martinho Fernandes
-// 
+//  
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//  
 // http://www.apache.org/licenses/LICENSE-2.0
-// 
+//  
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 #endregion
 
 using System.Collections.Generic;
@@ -23,12 +21,13 @@ using System.Windows.Forms;
 
 using Gluon.Annotations;
 using Gluon.Utils;
+using Gluon.Validation.Validators;
 
 namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
-    [ProvideProperty("Validator", typeof (Control))]
-    public class ValidationProvider : Component, IExtenderProvider
+    [ProvideProperty("Validator", typeof(Control))]
+    public class ValidationProvider : ErrorProvider, IExtenderProvider
     {
         private bool allowChangingFocus = true;
 
@@ -56,7 +55,7 @@ namespace Gluon.Validation
         public void SetValidator([NotNull] Control control, [CanBeNull] IControlValidator validator)
         {
             Ensure.ArgumentNotNull(control, "control");
-            var changeKind = this.validators.Change(control, validator);
+            ChangeKind changeKind = this.validators.Change(control, validator);
             if (changeKind == ChangeKind.Added)
             {
                 control.Validating += this.Validate;
@@ -67,22 +66,6 @@ namespace Gluon.Validation
             }
         }
 
-        [NotNull] private readonly IDictionary<Control, string> errors =
-            new Dictionary<Control, string>();
-
-        [NotNull]
-        public string GetError([NotNull] Control control)
-        {
-            Ensure.ArgumentNotNull(control, "control");
-            return this.errors.GetValueOrDefault(control, string.Empty);
-        }
-
-        public void SetError([NotNull] Control control, [CanBeNull] string error)
-        {
-            Ensure.ArgumentNotNull(control, "control");
-            this.errors.Change(control, error);
-        }
-
         private void Validate(object sender, CancelEventArgs e)
         {
             Ensure.ArgumentNotNull(e, "e");
@@ -91,8 +74,8 @@ namespace Gluon.Validation
                 return;
             }
 
-            var control = (Control) sender;
-            var result = this.validators[control].Validate(control);
+            var control = (Control)sender;
+            ValidationResult result = this.validators[control].Validate(control);
             if (!result.IsValid)
             {
                 this.SetError(control, result.ErrorMessage);
@@ -109,7 +92,7 @@ namespace Gluon.Validation
 
         public bool ValidateAll()
         {
-            var valid = true;
+            bool valid = true;
             var e = new CancelEventArgs();
             foreach (var control in this.validators.Keys)
             {

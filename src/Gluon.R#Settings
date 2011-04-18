@@ -47,7 +47,7 @@
           </MODIFIERS_ORDER>
           <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
           <PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>False</PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>
-          <REDUNDANT_THIS_QUALIFIER_STYLE>USE_FOR_FIELD</REDUNDANT_THIS_QUALIFIER_STYLE>
+          <REDUNDANT_THIS_QUALIFIER_STYLE>ALWAYS_USE</REDUNDANT_THIS_QUALIFIER_STYLE>
           <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
           <SPACE_AROUND_MULTIPLICATIVE_OP>True</SPACE_AROUND_MULTIPLICATIVE_OP>
           <SPACE_BEFORE_SIZEOF_PARENTHESES>False</SPACE_BEFORE_SIZEOF_PARENTHESES>
@@ -132,7 +132,7 @@ limitations under the License.]]></FileHeader>
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="LocalConstants" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PublicFields" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateInstanceFields" />
-        <PredefinedRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
+        <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="aaBb" ElementKind="PrivateStaticFields" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Constants" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="PrivateConstants" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="StaticReadonly" />
@@ -163,7 +163,7 @@ limitations under the License.]]></FileHeader>
         <UnusedType.Local>WARNING</UnusedType.Local>
         <UnusedType.Global>SUGGESTION</UnusedType.Global>
         <UnusedMember.Local>WARNING</UnusedMember.Local>
-        <UnusedMember.Global>SUGGESTION</UnusedMember.Global>
+        <UnusedMember.Global>DO_NOT_SHOW</UnusedMember.Global>
         <UnusedMemberInSuper.Local>WARNING</UnusedMemberInSuper.Local>
         <UnusedMemberInSuper.Global>SUGGESTION</UnusedMemberInSuper.Global>
         <UnusedMemberHiearchy.Local>WARNING</UnusedMemberHiearchy.Local>
@@ -261,7 +261,7 @@ limitations under the License.]]></FileHeader>
         <ConstructorInitializerLoop>WARNING</ConstructorInitializerLoop>
         <OptionalParameterHierarchyMismatch>WARNING</OptionalParameterHierarchyMismatch>
         <ClassNeverInstantiated.Local>SUGGESTION</ClassNeverInstantiated.Local>
-        <ClassNeverInstantiated.Global>SUGGESTION</ClassNeverInstantiated.Global>
+        <ClassNeverInstantiated.Global>DO_NOT_SHOW</ClassNeverInstantiated.Global>
         <UnaccessedField.Local>WARNING</UnaccessedField.Local>
         <UnaccessedField.Global>SUGGESTION</UnaccessedField.Global>
         <EventNeverSubscribedTo.Local>SUGGESTION</EventNeverSubscribedTo.Local>
@@ -344,8 +344,8 @@ limitations under the License.]]></FileHeader>
         <CSMakeFieldReadonly>True</CSMakeFieldReadonly>
         <CSUseVar>
           <BehavourStyle>CAN_CHANGE_BOTH</BehavourStyle>
-          <LocalVariableStyle>IMPLICIT_WHEN_INITIALIZER_HAS_TYPE</LocalVariableStyle>
-          <ForeachVariableStyle>IMPLICIT_EXCEPT_PRIMITIVE_TYPES</ForeachVariableStyle>
+          <LocalVariableStyle>ALWAYS_IMPLICIT</LocalVariableStyle>
+          <ForeachVariableStyle>ALWAYS_IMPLICIT</ForeachVariableStyle>
         </CSUseVar>
         <CSUpdateFileHeader>True</CSUpdateFileHeader>
         <VBOptimizeImports>True</VBOptimizeImports>

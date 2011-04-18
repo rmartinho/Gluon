@@ -14,8 +14,8 @@
 // limitations under the License.
 #endregion
 
-using Gluon.Annotations;
-using Gluon.Utils;
+using Wheels;
+using Wheels.Annotations;
 
 namespace Gluon.Validation
 {

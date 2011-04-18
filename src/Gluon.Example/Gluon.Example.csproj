@@ -57,6 +57,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.CoreEx">
+      <HintPath>..\..\lib\Rx-Core.1.0.2856.0\lib\Net4\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -65,6 +68,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wheels.Core, Version=0.5.0.0, Culture=neutral, PublicKeyToken=0824a07fbdfebcc5, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Wheels.Core.0.5.1\lib\Wheels.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gluon\Gluon.csproj">
@@ -114,6 +120,7 @@
     <None Include="..\Bevonn.snk">
       <Link>Properties\Bevonn.snk</Link>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />

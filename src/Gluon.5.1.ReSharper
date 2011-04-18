@@ -2,6 +2,7 @@
   <CodeAnnotations>
     <Namespace>Gluon.Annotations</Namespace>
     <Namespace>JetBrains.Annotations</Namespace>
-    <DefaultNamespace>Gluon.Annotations</DefaultNamespace>
+    <Namespace>Wheels.Annotations</Namespace>
+    <DefaultNamespace>Wheels.Annotations</DefaultNamespace>
   </CodeAnnotations>
 </Configuration>

@@ -39,6 +39,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.CoreEx">
+      <HintPath>..\packages\Rx-Core.1.0.2856.0\lib\Net4\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -46,37 +49,23 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Wheels.Core, Version=0.5.0.0, Culture=neutral, PublicKeyToken=0824a07fbdfebcc5, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Wheels.Core.0.5.1\lib\Wheels.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Bevonn.snk">
       <Link>Properties\Bevonn.snk</Link>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Annotations\AssertionConditionAttribute.cs" />
-    <Compile Include="Annotations\AssertionConditionType.cs" />
-    <Compile Include="Annotations\AssertionMethodAttribute.cs" />
-    <Compile Include="Annotations\CanBeNullAttribute.cs" />
-    <Compile Include="Annotations\CannotApplyEqualityOperatorAttribute.cs" />
-    <Compile Include="Annotations\ImplicitUseKindFlags.cs" />
-    <Compile Include="Annotations\ImplicitUseTargetFlags.cs" />
-    <Compile Include="Annotations\InstantHandleAttribute.cs" />
-    <Compile Include="Annotations\InvokerParameterNameAttribute.cs" />
-    <Compile Include="Annotations\LocalizationRequiredAttribute.cs" />
-    <Compile Include="Annotations\MeansImplicitUseAttribute.cs" />
-    <Compile Include="Annotations\NotNullAttribute.cs" />
-    <Compile Include="Annotations\PublicAPIAttribute.cs" />
-    <Compile Include="Annotations\PureAttribute.cs" />
-    <Compile Include="Annotations\StringFormatMethodAttribute.cs" />
-    <Compile Include="Annotations\TerminatesProgramAttribute.cs" />
-    <Compile Include="Annotations\UsedImplicitlyAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Utils\DictionaryExtensions.cs" />
-    <Compile Include="Utils\Ensure.cs" />
     <Compile Include="Validation\Validators\AlwaysTrueValidator.cs" />
     <Compile Include="Validation\Validators\CompositeValidator.cs">
       <SubType>Component</SubType>

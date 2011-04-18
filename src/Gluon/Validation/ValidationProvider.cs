@@ -19,9 +19,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using Gluon.Annotations;
 using Gluon.Utils;
 using Gluon.Validation.Validators;
+
+using Wheels;
+using Wheels.Annotations;
 
 namespace Gluon.Validation
 {
@@ -55,7 +57,7 @@ namespace Gluon.Validation
         public void SetValidator([NotNull] Control control, [CanBeNull] IControlValidator validator)
         {
             Ensure.ArgumentNotNull(control, "control");
-            ChangeKind changeKind = this.validators.Change(control, validator);
+            var changeKind = this.validators.Change(control, validator);
             if (changeKind == ChangeKind.Added)
             {
                 control.Validating += this.Validate;
@@ -75,7 +77,7 @@ namespace Gluon.Validation
             }
 
             var control = (Control)sender;
-            ValidationResult result = this.validators[control].Validate(control);
+            var result = this.validators[control].Validate(control);
             if (!result.IsValid)
             {
                 this.SetError(control, result.ErrorMessage);
@@ -92,7 +94,7 @@ namespace Gluon.Validation
 
         public bool ValidateAll()
         {
-            bool valid = true;
+            var valid = true;
             var e = new CancelEventArgs();
             foreach (var control in this.validators.Keys)
             {

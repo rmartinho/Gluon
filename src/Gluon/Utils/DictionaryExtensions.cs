@@ -42,9 +42,8 @@ namespace Gluon.Utils
             }
             else
             {
-                TValue existingValue;
-                if (!dictionary.TryGetValue(key, out existingValue)
-                    || existingValue != value)
+                var existingValue = dictionary.TryGetValue(key);
+                if (!existingValue.HasValue || existingValue.Value != value)
                 {
                     dictionary[key] = value;
                     return ChangeKind.Added;
@@ -64,11 +63,7 @@ namespace Gluon.Utils
             Ensure.ArgumentNotNull(key, "key");
             Ensure.ArgumentNotNull(defaultValue, "defaultValue");
 
-            TValue value;
-            if (!dictionary.TryGetValue(key, out value))
-            {
-                value = defaultValue;
-            }
+            var value = dictionary.TryGetValue(key) | defaultValue;
             Debug.Assert(value != null, "value != null");
             return value;
         }

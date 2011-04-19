@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using Gluon.Utils;
+using Gluon.Validation.ErrorFormatters;
 using Gluon.Validation.Validators;
 
 using Wheels;
@@ -29,24 +30,25 @@ namespace Gluon.Validation
 {
     [ToolboxItemFilter("System.Windows.Forms")]
     [ProvideProperty("Validator", typeof(Control))]
-    public class ValidationProvider : ErrorProvider, IExtenderProvider
+    [ProvideProperty("ErrorFormatter", typeof(Control))]
+    public class ValidationProvider : Component, IExtenderProvider
     {
-        private bool allowChangingFocus = true;
+        private bool canChangeFocusWhenInvalid = true;
 
         [DefaultValue(true)]
-        [Category("Behavior")]
+        [Category("Validation")]
         [Description("Whether invalid controls can change focus.")]
-        public bool AllowChangingFocus
+        public bool CanChangeFocusWhenInvalid
         {
-            get { return this.allowChangingFocus; }
-            set { this.allowChangingFocus = value; }
+            get { return this.canChangeFocusWhenInvalid; }
+            set { this.canChangeFocusWhenInvalid = value; }
         }
 
         [NotNull] private readonly IDictionary<Control, IControlValidator> validators =
             new Dictionary<Control, IControlValidator>();
 
         [NotNull]
-        [Category("Behavior")]
+        [Category("Validation")]
         [Description("The validator for this control.")]
         public IControlValidator GetValidator([NotNull] Control control)
         {
@@ -57,7 +59,7 @@ namespace Gluon.Validation
         public void SetValidator([NotNull] Control control, [CanBeNull] IControlValidator validator)
         {
             Ensure.ArgumentNotNull(control, "control");
-            var changeKind = this.validators.Change(control, validator);
+            var changeKind = this.validators.Modify(control, validator);
             if (changeKind == ChangeKind.Added)
             {
                 control.Validating += this.Validate;
@@ -65,6 +67,59 @@ namespace Gluon.Validation
             else if (changeKind == ChangeKind.Removed)
             {
                 control.Validating -= this.Validate;
+            }
+        }
+
+        [NotNull] private readonly IDictionary<Control, IErrorFormatter> errorFormatters =
+            new Dictionary<Control, IErrorFormatter>();
+
+        [NotNull]
+        [Category("Validation")]
+        [Description("The error formatter for this control.")]
+        public IErrorFormatter GetErrorFormatter([NotNull] Control control)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            return this.errorFormatters.GetValueOrDefault(control, NoErrorFormatter.Instance);
+        }
+
+        public void SetErrorFormatter([NotNull] Control control,
+                                      [CanBeNull] IErrorFormatter errorFormatter)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            var changeKind = this.errorFormatters.Modify(control, errorFormatter);
+            if (changeKind == ChangeKind.Added)
+            {
+                control.Validating += this.Validate;
+            }
+            else if (changeKind == ChangeKind.Removed)
+            {
+                control.Validating -= this.Validate;
+            }
+        }
+
+        [NotNull] private readonly IDictionary<Control, string> errors =
+            new Dictionary<Control, string>();
+
+        [NotNull]
+        public string GetError([NotNull] Control control)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            return this.errors.GetValueOrDefault(control, string.Empty);
+        }
+
+        private void SetError([NotNull] Control control, [CanBeNull] string error)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            var changeKind = this.errors.Modify(control, error);
+            var errorFormatter = this.GetErrorFormatter(control);
+            if (changeKind == ChangeKind.Added)
+            {
+                Debug.Assert(error != null, "error != null");
+                errorFormatter.ShowError(control, error);
+            }
+            if (changeKind == ChangeKind.Removed)
+            {
+                errorFormatter.HideError(control);
             }
         }
 
@@ -81,7 +136,7 @@ namespace Gluon.Validation
             if (!result.IsValid)
             {
                 this.SetError(control, result.ErrorMessage);
-                if (!this.AllowChangingFocus)
+                if (!this.CanChangeFocusWhenInvalid)
                 {
                     e.Cancel = true;
                 }

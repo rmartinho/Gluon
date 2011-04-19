@@ -24,7 +24,7 @@ namespace Gluon.Utils
 {
     internal static class DictionaryExtensions
     {
-        public static ChangeKind Change<TKey, TValue>(
+        public static ChangeKind Modify<TKey, TValue>(
             [NotNull] this IDictionary<TKey, TValue> dictionary,
             [NotNull] TKey key,
             [CanBeNull] TValue value)

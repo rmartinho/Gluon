@@ -31,15 +31,17 @@ namespace Gluon.Example
         /// </summary>
         private void InitializeComponent()
         {
-            RegexValidator EmailValidator;
+            Gluon.Validation.Validators.RegexValidator EmailValidator;
             this.CloseButton = new System.Windows.Forms.Button();
             this.EmailBox = new System.Windows.Forms.TextBox();
             this.NumberBox = new System.Windows.Forms.TextBox();
             this.ValidationProvider = new Gluon.Validation.ValidationProvider();
-            this.NumberValidator = new NumberRangeValidator();
+            this.BlinkIconFormatter = new Gluon.Validation.ErrorFormatters.ErrorProviderFormatter();
+            this.RedBackgroundFormatter = new Gluon.Validation.ErrorFormatters.BackgroundFormatter();
+            this.NumberValidator = new Gluon.Validation.Validators.NumberRangeValidator();
             this.ValidationButton = new Gluon.Validation.ValidationButton();
-            EmailValidator = new RegexValidator();
-            ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).BeginInit();
+            EmailValidator = new Gluon.Validation.Validators.RegexValidator();
+            ((System.ComponentModel.ISupportInitialize)(this.BlinkIconFormatter)).BeginInit();
             this.SuspendLayout();
             // 
             // EmailValidator
@@ -61,6 +63,7 @@ namespace Gluon.Example
             // EmailBox
             // 
             this.EmailBox.CausesValidation = false;
+            this.ValidationProvider.SetErrorFormatter(this.EmailBox, this.BlinkIconFormatter);
             this.EmailBox.Location = new System.Drawing.Point(68, 112);
             this.EmailBox.Name = "EmailBox";
             this.EmailBox.Size = new System.Drawing.Size(159, 20);
@@ -70,14 +73,16 @@ namespace Gluon.Example
             // NumberBox
             // 
             this.NumberBox.CausesValidation = false;
+            this.ValidationProvider.SetErrorFormatter(this.NumberBox, this.RedBackgroundFormatter);
             this.NumberBox.Location = new System.Drawing.Point(68, 86);
             this.NumberBox.Name = "NumberBox";
             this.NumberBox.Size = new System.Drawing.Size(159, 20);
             this.NumberBox.TabIndex = 0;
             this.ValidationProvider.SetValidator(this.NumberBox, this.NumberValidator);
             // 
-            // ValidationProvider
+            // BlinkIconFormatter
             // 
+            this.BlinkIconFormatter.ContainerControl = this;
             // 
             // NumberValidator
             // 
@@ -109,7 +114,7 @@ namespace Gluon.Example
             this.Controls.Add(this.NumberBox);
             this.Name = "ValidationForm";
             this.Text = "CreateEditForm";
-            ((System.ComponentModel.ISupportInitialize)(this.ValidationProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlinkIconFormatter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,6 +128,8 @@ namespace Gluon.Example
         private System.Windows.Forms.Button CloseButton;
         private ValidationButton ValidationButton;
         private NumberRangeValidator NumberValidator;
+        private Validation.ErrorFormatters.BackgroundFormatter RedBackgroundFormatter;
+        private Validation.ErrorFormatters.ErrorProviderFormatter BlinkIconFormatter;
 
     }
 }

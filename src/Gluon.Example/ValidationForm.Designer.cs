@@ -32,6 +32,8 @@ namespace Gluon.Example
         private void InitializeComponent()
         {
             Gluon.Validation.Validators.RegexValidator EmailValidator;
+            System.Windows.Forms.Label EmailLabel;
+            System.Windows.Forms.Label NumberLabel;
             this.CloseButton = new System.Windows.Forms.Button();
             this.EmailBox = new System.Windows.Forms.TextBox();
             this.NumberBox = new System.Windows.Forms.TextBox();
@@ -41,6 +43,8 @@ namespace Gluon.Example
             this.NumberValidator = new Gluon.Validation.Validators.NumberRangeValidator();
             this.ValidationButton = new Gluon.Validation.ValidationButton();
             EmailValidator = new Gluon.Validation.Validators.RegexValidator();
+            EmailLabel = new System.Windows.Forms.Label();
+            NumberLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BlinkIconFormatter)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +57,7 @@ namespace Gluon.Example
             // CloseButton
             // 
             this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CloseButton.Location = new System.Drawing.Point(87, 213);
+            this.CloseButton.Location = new System.Drawing.Point(62, 73);
             this.CloseButton.Name = "CloseButton";
             this.CloseButton.Size = new System.Drawing.Size(75, 23);
             this.CloseButton.TabIndex = 3;
@@ -63,20 +67,20 @@ namespace Gluon.Example
             // EmailBox
             // 
             this.EmailBox.CausesValidation = false;
-            this.ValidationProvider.SetErrorFormatter(this.EmailBox, this.BlinkIconFormatter);
-            this.EmailBox.Location = new System.Drawing.Point(68, 112);
+            this.ValidationProvider.SetErrorFormatter(this.EmailBox, this.RedBackgroundFormatter);
+            this.EmailBox.Location = new System.Drawing.Point(62, 41);
             this.EmailBox.Name = "EmailBox";
-            this.EmailBox.Size = new System.Drawing.Size(159, 20);
+            this.EmailBox.Size = new System.Drawing.Size(162, 20);
             this.EmailBox.TabIndex = 1;
             this.ValidationProvider.SetValidator(this.EmailBox, EmailValidator);
             // 
             // NumberBox
             // 
             this.NumberBox.CausesValidation = false;
-            this.ValidationProvider.SetErrorFormatter(this.NumberBox, this.RedBackgroundFormatter);
-            this.NumberBox.Location = new System.Drawing.Point(68, 86);
+            this.ValidationProvider.SetErrorFormatter(this.NumberBox, this.BlinkIconFormatter);
+            this.NumberBox.Location = new System.Drawing.Point(62, 15);
             this.NumberBox.Name = "NumberBox";
-            this.NumberBox.Size = new System.Drawing.Size(159, 20);
+            this.NumberBox.Size = new System.Drawing.Size(162, 20);
             this.NumberBox.TabIndex = 0;
             this.ValidationProvider.SetValidator(this.NumberBox, this.NumberValidator);
             // 
@@ -93,7 +97,7 @@ namespace Gluon.Example
             // ValidationButton
             // 
             this.ValidationButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ValidationButton.Location = new System.Drawing.Point(197, 213);
+            this.ValidationButton.Location = new System.Drawing.Point(149, 73);
             this.ValidationButton.Name = "ValidationButton";
             this.ValidationButton.Size = new System.Drawing.Size(75, 23);
             this.ValidationButton.TabIndex = 4;
@@ -101,19 +105,41 @@ namespace Gluon.Example
             this.ValidationButton.UseVisualStyleBackColor = true;
             this.ValidationButton.ValidationProvider = this.ValidationProvider;
             // 
+            // EmailLabel
+            // 
+            EmailLabel.AutoSize = true;
+            EmailLabel.Location = new System.Drawing.Point(21, 44);
+            EmailLabel.Name = "EmailLabel";
+            EmailLabel.Size = new System.Drawing.Size(35, 13);
+            EmailLabel.TabIndex = 5;
+            EmailLabel.Text = "E-mail";
+            // 
+            // NumberLabel
+            // 
+            NumberLabel.AutoSize = true;
+            NumberLabel.Location = new System.Drawing.Point(12, 18);
+            NumberLabel.Name = "NumberLabel";
+            NumberLabel.Size = new System.Drawing.Size(44, 13);
+            NumberLabel.TabIndex = 6;
+            NumberLabel.Text = "Number";
+            // 
             // ValidationForm
             // 
             this.AcceptButton = this.ValidationButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.CloseButton;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(249, 108);
+            this.Controls.Add(NumberLabel);
+            this.Controls.Add(EmailLabel);
             this.Controls.Add(this.ValidationButton);
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.EmailBox);
             this.Controls.Add(this.NumberBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ValidationForm";
-            this.Text = "CreateEditForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Validation";
             ((System.ComponentModel.ISupportInitialize)(this.BlinkIconFormatter)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

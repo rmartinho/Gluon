@@ -17,50 +17,48 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 using Wheels;
 using Wheels.Annotations;
 
-namespace Gluon.Validation.Validators
+namespace Gluon.Validation.ErrorFormatters
 {
-    public sealed class CompositeValidator : Component, IControlValidator
+    public sealed class CompositeErrorFormatter : Component, IErrorFormatter
     {
-        [NotNull] private readonly IList<IControlValidator> validators;
+        [NotNull] private readonly IList<IErrorFormatter> errorFormatters;
 
         [NotNull]
-        public IList<IControlValidator> Validators
+        public IList<IErrorFormatter> ErrorFormatters
         {
-            get { return this.validators; }
+            get { return this.errorFormatters; }
         }
 
-        public CompositeValidator() : this(Enumerable.Empty<IControlValidator>()) {}
+        public CompositeErrorFormatter() : this(Enumerable.Empty<IErrorFormatter>()) {}
 
-        public CompositeValidator([NotNull] IEnumerable<IControlValidator> validators)
+        public CompositeErrorFormatter([NotNull] IEnumerable<IErrorFormatter> validators)
         {
             Ensure.ArgumentNotNull(validators, "validators");
-            this.validators = new List<IControlValidator>(validators);
+            this.errorFormatters = new List<IErrorFormatter>(validators);
         }
 
-        public ValidationResult Validate(Control control)
+        public void ShowError(Control control, string error)
         {
             Ensure.ArgumentNotNull(control, "control");
+            Ensure.ArgumentNotNull(error, "error");
+            foreach (var errorFormatter in this.errorFormatters)
+            {
+                errorFormatter.ShowError(control, error);
+            }
+        }
 
-            var fullMessage = new StringBuilder();
-            foreach (var validator in this.validators)
+        public void HideError(Control control)
+        {
+            Ensure.ArgumentNotNull(control, "control");
+            foreach (var errorFormatter in this.errorFormatters.Reverse())
             {
-                var result = validator.Validate(control);
-                if (!result.IsValid)
-                {
-                    fullMessage.AppendLine(result.ErrorMessage);
-                }
+                errorFormatter.HideError(control);
             }
-            if (fullMessage.Length > 0)
-            {
-                return ValidationResult.Invalid(fullMessage.ToString());
-            }
-            return ValidationResult.Valid;
         }
     }
 }
